@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+$main-gradient: linear-gradient(145deg, #ff008a, #ff004d);
+$white: #fff;
+
+* {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  font-size: 62.5%;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+p,
+label {
+  cursor: context-menu;
+}

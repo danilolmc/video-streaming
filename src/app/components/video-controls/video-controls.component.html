@@ -1,0 +1,20 @@
+<div class="controls">
+
+    <button class="btn-video" (click)="toggleVideoStatus()">
+        <img *ngIf="!controlStatus.videoIsActive" src="../../../assets/icons/video-call.svg" alt="Open video icon">
+        <img *ngIf="controlStatus.videoIsActive" src="../../../assets/icons/close-video.svg" alt="Close video icon">
+    </button>
+
+    <button class="btn-call" (click)="toggleCallingStatus()">
+        <img *ngIf="!controlStatus.callIsActive" src="../../../assets/icons/phone-call.svg" alt="Start video call icon">
+        <img *ngIf="controlStatus.callIsActive" src="../../../assets/icons/end-call.svg" alt="End video call icon">
+    </button>
+
+    <button class="btn-microphone" (click)="toggleMicrophoneStatus()">
+        <img *ngIf="controlStatus.microfoneIsMuted" src="../../../assets/icons/mute-microphone.svg"
+            alt="Mute microphone icon">
+        <img *ngIf="!controlStatus.microfoneIsMuted" src="../../../assets/icons/microphone.svg"
+            alt="Mute microphone icon">
+    </button>
+
+</div>

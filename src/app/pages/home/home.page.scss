@@ -1,0 +1,28 @@
+@use '/src/styles.scss';
+
+.splash-container {
+  width: 100vw;
+  height: 100vh;
+  background: styles.$main-gradient;
+  display: grid;
+  place-content: center;
+  position: absolute;
+
+  .splash-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10rem;
+
+    img {
+      max-width: 20rem;
+      margin: 0 auto;
+    }
+  }
+}
+
+.header-controls-buttons{
+  display: flex;
+  justify-content: space-between;
+  column-gap: 2rem;
+}
