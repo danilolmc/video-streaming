@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ControlsStatus } from '../video-controls/interfaces/ControlStatus';
 
 @Component({
   selector: 'app-video',
@@ -7,9 +8,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoComponent implements OnInit {
 
-  constructor() { }
+  userMedia = {} as MediaStream;
 
-  ngOnInit(): void {
+  videoConstraints = {
+    audio: true,
+    video: true
   }
 
+  @ViewChild('video') video: ElementRef<HTMLVideoElement>;
+
+  ngOnInit() {
+
+    this.getCameraVideo();
+  }
+
+  changeStreamStatus(controlStatus: ControlsStatus) {
+    this.userMedia.getAudioTracks()[0].enabled = !controlStatus.microfoneIsMuted;
+    this.userMedia.getVideoTracks()[0].enabled = controlStatus.videoIsActive;
+  }
+
+  async getCameraVideo() {
+
+    this.userMedia = await navigator.mediaDevices.getUserMedia(this.videoConstraints);
+
+    this.video.nativeElement.srcObject = this.userMedia;
+
+    this.video.nativeElement.onloadedmetadata = () => {
+      this.video.nativeElement.play();
+    }
+  }
 }

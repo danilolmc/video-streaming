@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ControlsStatus } from './interfaces/ControlStatus';
 
 @Component({
@@ -9,10 +9,13 @@ import { ControlsStatus } from './interfaces/ControlStatus';
 export class VideoControlsComponent {
 
   controlStatus: ControlsStatus = {
-    callIsActive: false,
+    callIsActive: true,
     microfoneIsMuted: false,
-    videoIsActive: false
+    videoIsActive: true
   };
+
+
+  @Output() statusVideoCall = new EventEmitter<ControlsStatus>();
 
   toggleVideoStatus() {
 
@@ -20,6 +23,7 @@ export class VideoControlsComponent {
 
     this.controlStatus = { ...this.controlStatus, videoIsActive: newVideoStatus };
 
+    this.statusVideoCall.emit(this.controlStatus);
   }
 
   toggleMicrophoneStatus() {
@@ -28,6 +32,7 @@ export class VideoControlsComponent {
 
     this.controlStatus = { ...this.controlStatus, microfoneIsMuted: newMicrophoneStatus };
 
+    this.statusVideoCall.emit(this.controlStatus);
   }
 
   toggleCallingStatus() {
@@ -36,6 +41,7 @@ export class VideoControlsComponent {
 
     this.controlStatus = { ...this.controlStatus, callIsActive: newCallingStatus };
 
+    this.statusVideoCall.emit(this.controlStatus);
   }
 
 }

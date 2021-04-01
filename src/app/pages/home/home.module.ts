@@ -12,9 +12,7 @@ import { HomePageRountingModule } from './home.routing.module';
 @NgModule({
   declarations: [
     HomePage,
-    VideoControlsComponent,
-    CaptureScreenComponent,
-    ToggleVideoControlsComponent
+
   ],
   imports: [
     CommonModule,

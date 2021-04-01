@@ -1,15 +1,16 @@
 <div class="video-container">
 
     <header>
-        <ng-content select="[headerControls]"></ng-content>
+        <div class="header-controls-buttons">
+            <app-toggle-video-controls></app-toggle-video-controls>
+            <app-capture-screen></app-capture-screen>
+        </div>
     </header>
 
-    <div class="video">
-
-    </div>
+    <video class="video" #video></video>
 
     <footer>
-        <ng-content select="[footerControls]"></ng-content>
+        <app-video-controls (statusVideoCall)="changeStreamStatus($event)"></app-video-controls>
     </footer>
 
 </div>
