@@ -1,0 +1,10 @@
+<figure [@mediaContentAnimation]="componentIsVisible ? 'photoWasTaken': 'photoWasNotTaken'">
+    <div class="media-content">
+        <video *ngIf="getMedia.type == 'video'" [src]="getMedia.src" autoplay loop></video>
+        <img *ngIf="getMedia.type == 'image'" [src]="getMedia.src" />
+    </div>
+    <figcaption>
+        <button (click)="descartarMedia()">Descartar</button>
+        <a [href]="getMedia.src" download="screenshot.png">Salvar</a>
+    </figcaption>
+</figure>

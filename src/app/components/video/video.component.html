@@ -2,15 +2,25 @@
 
     <header>
         <div class="header-controls-buttons">
-            <app-toggle-video-controls></app-toggle-video-controls>
-            <app-capture-screen></app-capture-screen>
+            <button class="btntoggleControls" (click)="toggleVideoControls()">
+                <img src=" ../../../assets/icons/hide-controls.svg" alt="Hidden controls icon">
+            </button>
+
+            <button class="btnScreenShot" (click)="screenShot()">
+                <img src="../../../assets/icons/camera.svg" alt="Capture video icon">
+            </button>
         </div>
     </header>
 
     <video class="video" #video></video>
 
-    <footer>
+    <img [src]="(capturedMedia | async).src" alt="">
+
+    <app-media-captured (descardMediaEvent)="resetMediaComponent()" [setMedia]="capturedMedia | async"
+        [componentIsVisible]="mediaCaptureisVisible">
+    </app-media-captured>
+
+    <footer [@videoControlsAnimation]="videoControlsIsVisible ? 'isVisible' : 'isHidden'">
         <app-video-controls (statusVideoCall)="changeStreamStatus($event)"></app-video-controls>
     </footer>
-
 </div>

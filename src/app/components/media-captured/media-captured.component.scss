@@ -1,0 +1,55 @@
+@use '../../../styles.scss';
+
+figure {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  bottom: 0;
+  min-width: 300px;
+  width: 300px;
+  margin: 2rem 3rem 4rem;
+  transform: translateX(-150%);
+
+  .media-content {
+    margin-bottom: 1rem;
+    background: #000;
+    border: 2px solid #ccc;
+    min-height: 170px;
+    height: 170px;
+    overflow: hidden;
+
+    img,
+    video {
+      height: 170px;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  figcaption {
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+
+    button,
+    a {
+      display: block;
+      font-size: 1.3rem;
+    }
+
+    button {
+      border: 2px solid red;
+      background: #fff;
+      color: red;
+      padding: 0.5rem;
+    }
+
+    a {
+      background: styles.$main-gradient;
+      text-decoration: none;
+      color: styles.$white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+  }
+}

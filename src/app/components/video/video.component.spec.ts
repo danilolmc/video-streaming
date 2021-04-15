@@ -1,9 +1,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VideoComponent } from './video.component';
 
-import { ControlsStatus } from '../video-controls/interfaces/ControlStatus';
+
 
 describe('VideoComponent', () => {
   let component: VideoComponent;
@@ -12,7 +13,8 @@ describe('VideoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [BrowserAnimationsModule]
     })
       .compileComponents();
   });
@@ -33,6 +35,36 @@ describe('VideoComponent', () => {
 
     expect(component.videoConstraints).toStrictEqual(expectedVideoConstraints);
 
+  })
+
+  it('should hide video controls', () => {
+    component.videoControlsIsVisible = true;
+
+    const toggleVideoControlsButton: HTMLButtonElement = fixture.debugElement
+      .query(By.css('.btntoggleControls'))
+      .nativeElement
+
+    const spyToggleControlFn = jest.spyOn(component, 'toggleVideoControls');
+
+    toggleVideoControlsButton.click();
+
+    expect(spyToggleControlFn).toBeCalledTimes(1);
+    expect(component.videoControlsIsVisible).toBeFalsy();
+  })
+
+  it('should show video controls', () => {
+    component.videoControlsIsVisible = false;
+
+    const toggleVideoControlsButton: HTMLButtonElement = fixture.debugElement
+      .query(By.css('.btntoggleControls'))
+      .nativeElement
+
+    const spyToggleControlFn = jest.spyOn(component, 'toggleVideoControls');
+
+    toggleVideoControlsButton.click();
+
+    expect(spyToggleControlFn).toBeCalledTimes(1);
+    expect(component.videoControlsIsVisible).toBeTruthy();
   })
 
 });
