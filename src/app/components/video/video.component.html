@@ -2,6 +2,11 @@
 
     <header>
         <div class="header-controls-buttons">
+            <div class="recordButtonsGroup">
+                <button *ngIf="!videoItsBeenRecorded" class="btnstart-record" (click)="screenRecord()"></button>
+                <button *ngIf="videoItsBeenRecorded" class="btnstop-record" (click)="stopScreenRecord()"></button>
+            </div>
+
             <button class="btntoggleControls" (click)="toggleVideoControls()">
                 <img src=" ../../../assets/icons/hide-controls.svg" alt="Hidden controls icon">
             </button>
@@ -14,11 +19,13 @@
 
     <video class="video" #video></video>
 
-    <img [src]="(capturedMedia | async).src" alt="">
+    <!-- <img [src]="(capturedMedia.asObservable() | async).src" alt=""> -->
 
-    <app-media-captured (descardMediaEvent)="resetMediaComponent()" [setMedia]="capturedMedia | async"
+    <app-media-captured (descardMediaEvent)="resetMediaComponent()" [setMedia]="capturedMedia.asObservable() | async"
         [componentIsVisible]="mediaCaptureisVisible">
     </app-media-captured>
+
+    <video #videaleatorio></video>
 
     <footer [@videoControlsAnimation]="videoControlsIsVisible ? 'isVisible' : 'isHidden'">
         <app-video-controls (statusVideoCall)="changeStreamStatus($event)"></app-video-controls>

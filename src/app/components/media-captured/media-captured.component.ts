@@ -1,8 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 
 interface Media {
-  src: string;
+  src: SafeUrl;
   type: string;
 }
 
@@ -26,24 +27,34 @@ interface Media {
     ])
   ]
 })
-export class MediaCapturedComponent {
+export class MediaCapturedComponent implements OnChanges {
+
+  private supportedTypes = ['image', 'video'];
+
+  fileName = '';
 
   private media: Media = {
     src: '',
     type: ''
   }
 
-  private mediaCapturedIsvisible = false;
+  ngOnChanges() {
+
+    const fileName = {
+      image: 'screenshot.png',
+      video: 'video-recording.webm'
+    }
+
+    this.media = this.media;
+    this.fileName = fileName[this.media.type];
+  }
+
+  @ViewChild('video') video: ElementRef<HTMLVideoElement>;
 
   @Output() descardMediaEvent = new EventEmitter();
 
-  @Input() set componentIsVisible(isVisible: boolean) {
-    this.mediaCapturedIsvisible = isVisible
-  }
+  @Input() componentIsVisible = false;
 
-  get componentIsVisible() {
-    return this.mediaCapturedIsvisible;
-  }
 
   get getMedia() {
     return this.media;
@@ -51,15 +62,14 @@ export class MediaCapturedComponent {
 
   @Input() set setMedia(media: Media) {
 
-    const supportedTypes = ['image', 'video'];
+    if (!this.supportedTypes.includes(media.type)) throw new Error('Tipo de mídia não suportada');
+    if (!media.src) throw new Error('O atributo src é inválido');
 
-    if (!supportedTypes.includes(media.type)) throw new Error('Tipo de mídia não suportada');
-    if (media.src.length == 0) throw new Error('O atributo src é inválido');
-
-    this.media = media;
+    this.media = media
   }
 
   descartarMedia() {
+    this.media.src = ''
     this.descardMediaEvent.emit();
   }
 

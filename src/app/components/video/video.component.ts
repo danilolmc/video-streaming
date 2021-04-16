@@ -1,8 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { ControlsStatus } from '../video-controls/interfaces/ControlStatus';
 
+declare const MediaRecorder: any;
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
@@ -25,44 +27,105 @@ import { ControlsStatus } from '../video-controls/interfaces/ControlStatus';
 })
 export class VideoComponent implements OnInit {
 
-  userMedia = {} as MediaStream;
+  userMedia = new MediaStream();
+
+  mediaRecorder: any;
 
   videoConstraints = {
     audio: true,
     video: true
   }
 
+  videoBlob = new Blob();
+
   videoControlsIsVisible = true;
+
+  videoItsBeenRecorded = false;
+
+  private recordedChuncks: string[] = [];
 
   @ViewChild('video') video: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas: ElementRef<HTMLCanvasElement>;
 
+
   capturedMedia = new BehaviorSubject({
-    src: 'img.png', type: 'image'
+    src: this.sanitizer.bypassSecurityTrustUrl('img.png'), type: 'image'
   });
+
 
   mediaCaptureisVisible = false;
 
   ngOnInit() {
-
-    this.getCameraVideo();
+    this.setupCameraVideo();
   }
+
+  constructor(private sanitizer: DomSanitizer) { }
 
   changeStreamStatus(controlStatus: ControlsStatus) {
     this.userMedia.getAudioTracks()[0].enabled = !controlStatus.microfoneIsMuted;
     this.userMedia.getVideoTracks()[0].enabled = controlStatus.videoIsActive;
   }
 
-  async getCameraVideo() {
+  async setupCameraVideo() {
 
     this.userMedia = await navigator.mediaDevices.getUserMedia(this.videoConstraints);
 
     this.video.nativeElement.srcObject = this.userMedia;
 
+    const options = { mimeType: "video/webm; codecs=vp9" };
+
+    this.mediaRecorder = new MediaRecorder(this.userMedia, options);
+
+    this.mediaRecorder.addEventListener('stop', () => {
+
+      const recording = new Blob(this.recordedChuncks, { type: 'video/webm' });
+      this.recordedChuncks = [];
+
+      let video = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(recording));
+
+      this.capturedMedia.next({
+        src: video,
+        type: 'video'
+      })
+
+      this.changeRecordingStatus();
+      this.mediaCaptureisVisible = true;
+
+    })
+
     this.video.nativeElement.onloadedmetadata = () => {
       this.video.nativeElement.play();
     }
   }
+
+  screenRecord() {
+
+    this.changeRecordingStatus();
+
+    this.mediaRecorder.ondataavailable = (event) => {
+
+      if (event.data.size > 0) {
+
+        this.recordedChuncks.push(event.data);
+        console.log("gravou")
+
+      }
+    }
+
+    this.mediaRecorder.start();
+
+  }
+
+  // renderRecording(blob: Blob) {
+
+  // }
+
+  stopScreenRecord() {
+
+    this.mediaRecorder.stop();
+
+  }
+
 
   screenShot() {
 
@@ -77,12 +140,13 @@ export class VideoComponent implements OnInit {
 
       context.drawImage(this.video.nativeElement, -170, -200, 1800, 1300);
 
-      const imageData = { src: canvas.toDataURL('image/png'), type: 'image' };
+      const imageData = { src: this.sanitizer.bypassSecurityTrustUrl(canvas.toDataURL('image/png')), type: 'image' };
 
       this.capturedMedia.next(imageData);
     }
 
     this.mediaCaptureisVisible = true;
+
   }
 
   toggleVideoControls() {
@@ -93,4 +157,7 @@ export class VideoComponent implements OnInit {
     this.mediaCaptureisVisible = false;
   }
 
+  changeRecordingStatus() {
+    this.videoItsBeenRecorded = !this.videoItsBeenRecorded;
+  }
 }

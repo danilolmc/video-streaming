@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { By, DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VideoComponent } from './video.component';
 
@@ -14,7 +14,8 @@ describe('VideoComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [BrowserAnimationsModule]
+      imports: [BrowserAnimationsModule],
+      providers: [DomSanitizer]
     })
       .compileComponents();
   });

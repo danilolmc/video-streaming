@@ -23,14 +23,53 @@
       column-gap: 2rem;
 
       button {
-        background: styles.$main-gradient;
-        width: 5rem;
-        height: 5rem;
-        padding: 1rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        padding: 0.4rem;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
+      }
+
+      .btntoggleControls img {
+        width: 2.5rem;
+      }
+
+      .btnScreenShot img {
+        width: 1.8rem;
+      }
+
+      & > button {
+        background: styles.$main-gradient;
+      }
+
+      .recordButtonsGroup {
+        button {
+          background: none;
+          border: 2px solid #ff0070;
+        }
+
+        .btnstart-record {
+          &::after {
+            content: "";
+            display: block;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: #ff0070;
+          }
+        }
+
+        .btnstop-record {
+          &::after {
+            content: "";
+            display: block;
+            width: 70%;
+            height: 70%;
+            background: #ff0070;
+          }
+        }
       }
     }
   }
