@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
@@ -11,6 +11,7 @@ declare const MediaRecorder: any;
   styleUrls: ['./video.component.scss'],
   animations: [
     trigger('videoControlsAnimation', [
+
       state('isVisible', style({
         opacity: 1,
         transform: 'translateY(0)'
@@ -21,7 +22,7 @@ declare const MediaRecorder: any;
       })),
       transition('* => *', [
         animate('.5s ease')
-      ])
+      ]),
     ])
   ]
 })
@@ -64,6 +65,8 @@ export class VideoComponent implements OnInit {
   changeStreamStatus(controlStatus: ControlsStatus) {
     this.userMedia.getAudioTracks()[0].enabled = !controlStatus.microfoneIsMuted;
     this.userMedia.getVideoTracks()[0].enabled = controlStatus.videoIsActive;
+
+    this.videoConstraints = { audio: !controlStatus.microfoneIsMuted, video: controlStatus.videoIsActive }
   }
 
   async setupCameraVideo() {

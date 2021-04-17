@@ -1,6 +1,6 @@
 <figure [@mediaContentAnimation]="componentIsVisible ? 'photoWasTaken': 'photoWasNotTaken'">
     <div class="media-content">
-        <video *ngIf="getMedia.type == 'video'" [src]="getMedia.src" autoplay loop #video></video>
+        <video *ngIf="getMedia.type == 'video'" [src]="getMedia.src" autoplay #video></video>
         <img *ngIf="getMedia.type == 'image'" [src]="getMedia.src" #image />
     </div>
     <figcaption>

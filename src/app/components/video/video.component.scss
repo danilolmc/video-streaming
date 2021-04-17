@@ -10,6 +10,7 @@
   align-items: center;
   padding: 4rem 1rem 11rem;
   overflow: hidden;
+  background: #000;
 
   header {
     display: flex;
@@ -21,7 +22,16 @@
       display: flex;
       justify-content: space-between;
       column-gap: 2rem;
+      opacity: 0;
+      transform: translateX(200px);
+      animation: entryHeaderButtonsAnimation 0.5s ease forwards;
 
+      @keyframes entryHeaderButtonsAnimation {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
       button {
         width: 3.5rem;
         height: 3.5rem;
@@ -81,7 +91,9 @@
   }
 
   footer {
-    bottom: 10rem;
+    bottom: 5rem;
+    opacity: 0;
+    transform: translateY(150%);
   }
 
   .video {
@@ -91,6 +103,14 @@
     object-fit: cover;
     position: absolute;
     z-index: 0;
+  }
+
+  .controls-status {
+    position: fixed;
+    z-index: 100;
+    font-size: 1.2rem;
+    color: styles.$white;
+    pointer-events: none;
   }
 }
 
