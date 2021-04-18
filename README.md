@@ -4,7 +4,7 @@
 
 <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&color=43bd16&labelColor=535353" />
 
-<img alt="stars" src="https://img.shields.io/github/stars/DaniloLima122/countries-project?color=43bd16">
+<img alt="stars" src="https://img.shields.io/github/stars/DaniloLima122/video-streaming?color=43bd16">
 
 </div>
 
