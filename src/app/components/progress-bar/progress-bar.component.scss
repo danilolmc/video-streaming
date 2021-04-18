@@ -2,13 +2,13 @@
 
 .progress-bar {
   width: 100%;
-  height: 0.4rem;
+  height: 0.2rem;
   width: 28rem;
 
   .bar-progress {
     display: block;
     height: 100%;
     background: styles.$white;
-    transition: 0.2s ease;
+    transition: 0.5s linear;
   }
 }

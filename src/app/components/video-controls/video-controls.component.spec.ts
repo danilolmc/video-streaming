@@ -77,55 +77,6 @@ describe('VideoControlsComponent', () => {
     })
   })
 
-
-  // describe('should toggle calling', () => {
-
-  //   it('should switch button calling status from true to false', () => {
-
-  //     component.controlStatus.callIsActive = true;
-
-  //     const callingButton: HTMLButtonElement = fixture
-  //       .debugElement
-  //       .query(By.css('.btn-call'))
-  //       .nativeElement;
-
-  //     const spyToggleCallingFunction = jest.spyOn(component, 'toggleCallingStatus');
-
-  //     const spyEmmiter = jest.spyOn(component.statusVideoCall, 'emit');
-
-  //     callingButton.click();
-
-  //     const callingStatusIsActive = component.controlStatus.callIsActive;
-
-  //     expect(spyToggleCallingFunction).toHaveBeenCalledTimes(1);
-  //     expect(spyEmmiter).toBeCalledTimes(1);
-  //     expect(callingStatusIsActive).toBeFalsy();
-
-  //   })
-
-  //   it('should switch button calling status from false to true', () => {
-
-  //     component.controlStatus.callIsActive = false;
-
-  //     const callingButton: HTMLButtonElement = fixture
-  //       .debugElement
-  //       .query(By.css('.btn-call'))
-  //       .nativeElement;
-
-  //     const spyToggleCallingFunction = jest.spyOn(component, 'toggleCallingStatus');
-  //     const spyEmmiter = jest.spyOn(component.statusVideoCall, 'emit');
-
-  //     callingButton.click();
-
-  //     const callingStatusIsActive = component.controlStatus.callIsActive;
-
-  //     expect(spyToggleCallingFunction).toHaveBeenCalledTimes(1);
-  //     expect(spyEmmiter).toBeCalledTimes(1);
-  //     expect(callingStatusIsActive).toBeTruthy();
-
-  //   })
-  // })
-
   describe('microphone status toggle', () => {
 
     it('should switch microphone mute status to true', () => {
